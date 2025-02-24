@@ -1,34 +1,28 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Button } from "./components/Button"
+import { Plusicon } from "./icons/Plusicon"
+import { Shareicon } from "./icons/Shareicon"
+import { Card } from "./components/Card"
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="p-4">
+      <div className="flex justify-end gap-4">
+      <Button text="Add content" variant="primary" startIcon={<Plusicon />}></Button>
+      <Button text="Share Brain" variant="secondary" startIcon={<Shareicon />}></Button>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    
+
+
+    <div className="flex gap-4">
+    <Card title="first tweet" type="twitter" link="https://x.com/Cristiano/status/1893393533576392717?ref_src=twsrc%5Etfw"></Card>
+    <Card title="first youtube" type="youtube" link="https://youtu.be/ddAOQwxzq1o?si=uPKznJHFr94tq_Cg"></Card>
+    </div>
+     
+    </div>
   )
 }
 
