@@ -7,15 +7,12 @@ mongoose.connect("mongodb://127.0.0.1:27017/brainer")
 //User Schema 
 
 const userSchema = new Schema({
-    name : {
-        type:String,
-        required:true
-    } ,
+
     password: {
         type:String,
         required:true
     },
-    email: {
+    username: {
         type:String,
         required: true
         
@@ -28,6 +25,10 @@ const contentSchema = new Schema({
         required:true
     } ,
     title: {
+        type:String,
+        required:true
+    } ,
+    type: {
         type:String,
         required:true
     } ,

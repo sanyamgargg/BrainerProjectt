@@ -5,25 +5,28 @@ import {contentModel, linkModel, userModel} from "./db" ;
 import {JWT_PASSWORD} from "./config" ;
 import { userMiddleware } from "./middleware";
 import { randomgen } from "./utils";
+import cors from "cors"
+
 
 const app = express() ;
 app.use(express.json()) ;
-
+app.use(cors()) ;
+ 
 app.post("/api/v1/signup",async(req,res)=>{
     
-    const {email,password,name} = req.body ;
+    const {username,password} = req.body ;
 
 
     try{
         await userModel.create({
-            email:email,
+            username:username,
             password:password,
-            name:name
+           
         }) ;
     
         res.json({
-            name:name,
-            email:email,
+          
+            username:username,
             password:password
         }) ;
     }catch(e){
@@ -34,10 +37,10 @@ app.post("/api/v1/signup",async(req,res)=>{
 }) ;
 
 app.post("/api/v1/signin",async(req,res)=>{
-    const {email,password} = req.body ;
+    const {username,password} = req.body ;
 
     const checkPassword = await userModel.findOne({
-        email:email,
+        username:username,
         password:password
     }) ;
 
@@ -56,10 +59,11 @@ app.post("/api/v1/signin",async(req,res)=>{
 });
 
 app.post("/api/v1/content",userMiddleware,async(req,res)=>{
-    const {link,title} = req.body ;
+    const {link,title,type} = req.body ;
     await contentModel.create({
         link:link,
         title:title,
+        type:type,
         //@ts-ignore
         userId:req.userId,
         tags:[]
@@ -74,7 +78,7 @@ app.get("/api/v1/content",userMiddleware,async(req,res)=>{
     const userId = req.userId ;
     const content = await contentModel.find({
         userId:userId
-    }).populate("userId","email") ;
+    }).populate("userId","username") ;
     res.json({
         content:content
     })
@@ -155,7 +159,7 @@ app.get("/api/v1/brain/:shareLink",async(req,res)=>{
     })
 
     res.json({
-        user:user?.email ,
+        user:user?.username ,
         content:content
     })
 
